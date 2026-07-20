@@ -96,28 +96,20 @@ button{ cursor: pointer; border: none; background: none; font-family: inherit; }
 }
 
 /* Logo */
-.header__logo  { display: flex; align-items: center; gap: 10px; margin-right: auto; }
+.header__logo  { display: flex; align-items: center; margin-right: auto; }
 
-/* Wrapper que recorta o símbolo KRP da imagem de marca */
-.logo-img-wrap {
-  width: 44px; height: 44px;
-  border-radius: 50%; overflow: hidden;
-  flex-shrink: 0;
-  background: var(--creme);
-  border: 1.5px solid rgba(201,136,42,.4);
-}
-.logo-img-wrap img {
-  width: 160%; height: 160%;
+.header__logo-img {
+  width: 52px; height: 52px;
+  border-radius: 50%;
   object-fit: cover;
-  margin-top: -8%;
-  margin-left: -30%;
-  /* Recorta para mostrar só o símbolo KRP: centro horizontal, terço superior */
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,.3));
+  transition: opacity var(--transition);
 }
-.logo-img-wrap--sm { width: 38px; height: 38px; }
-
-.logo-text     { display: flex; flex-direction: column; line-height: 1.2; }
-.logo-kaya     { font-size: 0.875rem; font-weight: 700; color: var(--creme); }
-.logo-perf     { font-size: 0.625rem; font-weight: 600; color: var(--ambar); letter-spacing: .1em; text-transform: uppercase; }
+.header__logo-img:hover { opacity: .88; }
+@media (min-width: 900px) {
+  .header__logo-img { width: 56px; height: 56px; }
+}
 
 /* Nav desktop */
 .nav { display: none; }
@@ -163,20 +155,53 @@ button{ cursor: pointer; border: none; background: none; font-family: inherit; }
 
 .hero__bg {
   position: absolute; inset: 0;
-  background: var(--verde) url('../assets/images/hero-bg-mobile.png') center/cover no-repeat;
+  background: var(--creme) url('../assets/images/hero-bg-mobile.png') center/cover no-repeat;
   z-index: 0;
 }
 .hero__bg::after {
   content: ''; position: absolute; inset: 0;
-  background: linear-gradient(to right, rgba(13,43,34,.93) 60%, rgba(13,43,34,.45));
+  /* mobile: escurece uniformemente para texto branco */
+  background: linear-gradient(to bottom, rgba(13,43,34,.70) 0%, rgba(13,43,34,.55) 100%);
 }
 @media (min-width: 768px) {
-  .hero__bg { background-image: url('../assets/images/hero-bg-desktop.png'); background-position: right center; }
-  .hero__bg::after { background: linear-gradient(to right, rgba(13,43,34,.88) 40%, rgba(13,43,34,.15)); }
+  .hero__bg {
+    background-image: url('../assets/images/hero-bg-desktop.png');
+    background-position: center center;
+  }
+  /* desktop: escurece mais a metade direita onde o texto aparece, preserva a arte da esquerda */
+  .hero__bg::after {
+    background: linear-gradient(to left, rgba(13,43,34,.82) 45%, rgba(13,43,34,.18) 100%);
+  }
 }
 
-.hero__inner   { position: relative; z-index: 1; padding: 56px 0; }
-.hero__content { max-width: 600px; }
+.hero__inner {
+  position: relative; z-index: 1; padding: 56px 0;
+  display: flex; align-items: center;
+  /* mobile: texto centralizado */
+  justify-content: center;
+}
+@media (min-width: 768px) {
+  /* desktop: texto empurrado para a direita (área escura com data-viz) */
+  .hero__inner { justify-content: flex-end; }
+}
+
+.hero__content {
+  max-width: 560px;
+  /* mobile: leve backdrop para legibilidade sem perder a imagem */
+  background: rgba(13,43,34,.45);
+  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  border-radius: var(--radius-lg);
+  padding: 32px 28px;
+}
+@media (min-width: 768px) {
+  .hero__content {
+    background: transparent;
+    backdrop-filter: none; -webkit-backdrop-filter: none;
+    padding: 0;
+    /* desloca 5% extra para direita para ficar bem na área escura */
+    margin-right: 2%;
+  }
+}
 
 .hero__eyebrow {
   font-size: 0.75rem; font-weight: 700; color: var(--ambar);
