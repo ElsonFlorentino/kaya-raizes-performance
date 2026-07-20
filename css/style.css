@@ -100,18 +100,20 @@ button{ cursor: pointer; border: none; background: none; font-family: inherit; }
 
 /* Wrapper que recorta o símbolo KRP da imagem de marca */
 .logo-img-wrap {
-  width: 40px; height: 40px;
+  width: 44px; height: 44px;
   border-radius: 50%; overflow: hidden;
   flex-shrink: 0;
   background: var(--creme);
-  border: 2px solid rgba(201,136,42,.35);
+  border: 1.5px solid rgba(201,136,42,.4);
 }
 .logo-img-wrap img {
-  width: 100%; height: 100%;
+  width: 160%; height: 160%;
   object-fit: cover;
-  object-position: 50% 28%; /* recorta para mostrar só o símbolo KRP */
+  margin-top: -8%;
+  margin-left: -30%;
+  /* Recorta para mostrar só o símbolo KRP: centro horizontal, terço superior */
 }
-.logo-img-wrap--sm { width: 36px; height: 36px; }
+.logo-img-wrap--sm { width: 38px; height: 38px; }
 
 .logo-text     { display: flex; flex-direction: column; line-height: 1.2; }
 .logo-kaya     { font-size: 0.875rem; font-weight: 700; color: var(--creme); }
