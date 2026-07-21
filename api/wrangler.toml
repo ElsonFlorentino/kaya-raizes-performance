@@ -1,0 +1,29 @@
+# Layer 5 & 6: Hosting & Deployment + Cloud & Compute
+# Cloudflare Worker roda na edge — 300+ cidades, sem servidor para gerenciar
+
+name = "kaya-raizes-api"
+main = "src/index.ts"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+
+# Layer 3: Database & Storage — Cloudflare D1 (SQLite na edge)
+[[d1_databases]]
+binding = "DB"
+database_name = "kaya-leads"
+database_id = "SUBSTITUA-PELO-ID-REAL-APOS-wrangler-d1-create"
+
+# Layer 10: Caching & CDN — Cloudflare KV para cache de leitura
+[[kv_namespaces]]
+binding = "CACHE"
+id = "SUBSTITUA-PELO-ID-REAL-DO-KV"
+preview_id = "SUBSTITUA-PELO-PREVIEW-ID-DO-KV"
+
+# Variáveis de ambiente (segredos via `wrangler secret put`)
+[vars]
+ENVIRONMENT = "production"
+ALLOWED_ORIGIN = "https://elsonflorentino.github.io"
+
+# Layer 11: Load Balancing & Scaling — automático pelo Cloudflare
+# Sem config necessária: Workers escalam para 0 e para milhões de req automaticamente
+
+# Layer 7: CI/CD — deploy automatizado via GitHub Actions (.github/workflows/api-deploy.yml)

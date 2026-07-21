@@ -1,0 +1,23 @@
+{
+  "name": "kaya-raizes-api",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:create": "wrangler d1 create kaya-leads",
+    "db:migrate": "wrangler d1 migrations apply kaya-leads",
+    "db:migrate:local": "wrangler d1 migrations apply kaya-leads --local",
+    "db:seed:local": "wrangler d1 execute kaya-leads --local --file=../database/seeds/seed.sql",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "hono": "^4.4.0",
+    "@sentry/cloudflare": "^8.0.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240701.0",
+    "typescript": "^5.5.0",
+    "wrangler": "^3.65.0"
+  }
+}
