@@ -11,6 +11,7 @@ compatibility_flags = ["nodejs_compat"]
 binding = "DB"
 database_name = "kaya-leads"
 database_id = "SUBSTITUA-PELO-ID-REAL-APOS-wrangler-d1-create"
+migrations_dir = "../database/migrations"
 
 # Layer 10: Caching & CDN — Cloudflare KV para cache de leitura
 [[kv_namespaces]]
