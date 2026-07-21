@@ -26,7 +26,7 @@ export const authMiddleware: MiddlewareHandler<{ Bindings: Bindings }> = async (
 
     // Injeta dados do usuário no contexto para uso nas rotas
     c.set('user' as never, payload)
-    await next()
+    return await next()
   } catch {
     return c.json({ error: 'Token inválido ou expirado' }, 401)
   }

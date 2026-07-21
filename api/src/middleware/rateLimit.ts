@@ -36,5 +36,5 @@ export const rateLimitMiddleware: MiddlewareHandler<{ Bindings: Bindings }> = as
   c.header('X-RateLimit-Limit',     String(MAX_REQUESTS))
   c.header('X-RateLimit-Remaining', String(MAX_REQUESTS - count - 1))
 
-  await next()
+  return await next()
 }
