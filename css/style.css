@@ -540,6 +540,101 @@ button{ cursor: pointer; border: none; background: none; font-family: inherit; }
 @media (min-width: 900px) { .wa-float { bottom: 32px; right: 32px; } }
 
 /* ============================================================
+   ANIMAÇÕES
+   ============================================================ */
+
+/* Hero — entrada em cascata no page-load */
+.hero__eyebrow,
+.hero__headline,
+.hero__sub,
+.hero__ctas,
+.hero__tagline {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: hero-in 0.6s ease forwards;
+}
+.hero__eyebrow  { animation-delay: 0.10s; }
+.hero__headline { animation-delay: 0.22s; }
+.hero__sub      { animation-delay: 0.36s; }
+.hero__ctas     { animation-delay: 0.50s; }
+.hero__tagline  { animation-delay: 0.64s; }
+
+@keyframes hero-in {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Scroll-reveal — base */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Processo — slide da esquerda */
+.processo-step.reveal { transform: translateX(-28px); }
+.processo-step.is-visible { transform: translateX(0); }
+
+/* Stagger — cards de problema */
+.card-problema:nth-child(1) { transition-delay: 0s; }
+.card-problema:nth-child(2) { transition-delay: 0.08s; }
+.card-problema:nth-child(3) { transition-delay: 0.16s; }
+.card-problema:nth-child(4) { transition-delay: 0.24s; }
+.card-problema:nth-child(5) { transition-delay: 0.32s; }
+
+/* Stagger — etapas do processo */
+.processo-step:nth-child(1) { transition-delay: 0s; }
+.processo-step:nth-child(2) { transition-delay: 0.12s; }
+.processo-step:nth-child(3) { transition-delay: 0.24s; }
+.processo-step:nth-child(4) { transition-delay: 0.36s; }
+
+/* Hover lift aprimorado — cards de serviço */
+.servico-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 32px rgba(201, 136, 42, 0.18);
+}
+
+/* Underline âmbar — nav links (desktop) */
+@media (min-width: 900px) {
+  .nav__link {
+    background: linear-gradient(var(--ambar), var(--ambar)) no-repeat left bottom / 0% 2px;
+    padding-bottom: 3px;
+    transition: color var(--transition), background-size 0.25s ease;
+  }
+  .nav__link:hover { color: var(--creme); background-size: 100% 2px; }
+}
+
+/* FAQ — accordion suave com max-height */
+.faq-item__a {
+  display: block !important;
+  overflow: hidden;
+  max-height: 0;
+  padding-bottom: 0;
+  transition: max-height 0.35s ease, padding-bottom 0.35s ease;
+}
+.faq-item__a.is-open {
+  max-height: 500px;
+  padding-bottom: 20px;
+}
+
+/* prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .hero__eyebrow, .hero__headline, .hero__sub, .hero__ctas, .hero__tagline {
+    opacity: 1; transform: none; animation: none;
+  }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .card-problema, .processo-step { transition-delay: 0s !important; }
+  .servico-card { transition: box-shadow var(--transition); }
+  .servico-card:hover { transform: none; }
+  .nav__link { background: none !important; }
+  .faq-item__a { transition: none; }
+}
+
+/* ============================================================
    UTILITÁRIOS
    ============================================================ */
 .visually-hidden {

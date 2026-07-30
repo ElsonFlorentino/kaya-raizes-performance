@@ -43,20 +43,36 @@ window.addEventListener('scroll', () => {
 document.querySelectorAll('.faq-item__q').forEach(btn => {
   btn.addEventListener('click', () => {
     const expanded = btn.getAttribute('aria-expanded') === 'true';
-    const panelId  = btn.getAttribute('aria-controls');
-    const panel    = document.getElementById(panelId);
+    const panel    = document.getElementById(btn.getAttribute('aria-controls'));
 
-    // Fechar todos
     document.querySelectorAll('.faq-item__q').forEach(b => b.setAttribute('aria-expanded', 'false'));
-    document.querySelectorAll('.faq-item__a').forEach(p => { p.hidden = true; });
+    document.querySelectorAll('.faq-item__a').forEach(p => p.classList.remove('is-open'));
 
-    // Abrir o clicado (se estava fechado)
     if (!expanded && panel) {
       btn.setAttribute('aria-expanded', 'true');
-      panel.hidden = false;
-      track('faq_open', { faq_id: panelId });
+      panel.classList.add('is-open');
+      track('faq_open', { faq_id: panel.id });
     }
   });
+});
+
+/* ============================================================
+   SCROLL REVEAL
+   ============================================================ */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('is-visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll(
+  '.card-problema, .servico-card, .processo-step, .para-quem-col, .sobre__visual, .sobre__text, .proposta'
+).forEach(el => {
+  el.classList.add('reveal');
+  revealObserver.observe(el);
 });
 
 /* ============================================================
