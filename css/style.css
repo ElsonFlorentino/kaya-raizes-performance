@@ -174,8 +174,20 @@ button{ cursor: pointer; border: none; background: none; font-family: inherit; }
   background: var(--creme) url('../assets/images/hero-bg-mobile.png') center/cover no-repeat;
   z-index: 0;
 }
+.hero__bg::before {
+  content: ''; position: absolute; inset: 0; z-index: 0;
+  background:
+    radial-gradient(ellipse 70% 55% at 15% 70%, rgba(201,136,42,.14) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 45% at 80% 20%, rgba(13,43,34,.6) 0%, transparent 60%);
+  animation: orb-drift 10s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+@keyframes orb-drift {
+  from { opacity: 0.7; background-position: 0% 0%; }
+  to   { opacity: 1;   background-position: 4% 4%; }
+}
 .hero__bg::after {
-  content: ''; position: absolute; inset: 0;
+  content: ''; position: absolute; inset: 0; z-index: 1;
   /* mobile: escurece uniformemente para texto branco */
   background: linear-gradient(to bottom, rgba(13,43,34,.70) 0%, rgba(13,43,34,.55) 100%);
 }
@@ -545,7 +557,6 @@ button{ cursor: pointer; border: none; background: none; font-family: inherit; }
 
 /* Hero — entrada em cascata no page-load */
 .hero__eyebrow,
-.hero__headline,
 .hero__sub,
 .hero__ctas,
 .hero__tagline,
@@ -555,7 +566,6 @@ button{ cursor: pointer; border: none; background: none; font-family: inherit; }
   animation: hero-in 0.6s ease forwards;
 }
 .hero__eyebrow  { animation-delay: 0.10s; }
-.hero__headline { animation-delay: 0.22s; }
 .hero__sub      { animation-delay: 0.36s; }
 .hero__ctas     { animation-delay: 0.50s; }
 .hero__tagline  { animation-delay: 0.64s; }
@@ -563,6 +573,88 @@ button{ cursor: pointer; border: none; background: none; font-family: inherit; }
 
 @keyframes hero-in {
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* Word reveal — H1 (clip-path mask, estilo Linear/Apple) */
+.word-wrap {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  line-height: 1.25;
+}
+.word {
+  display: inline-block;
+  transform: translateY(110%);
+  opacity: 0;
+  animation: word-up 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes word-up {
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Progress bar de leitura */
+.reading-progress {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 2px;
+  background: var(--ambar);
+  transform-origin: left center;
+  transform: scaleX(0);
+  z-index: 9999;
+  animation: reading-grow linear both;
+  animation-timeline: scroll(root block);
+}
+@keyframes reading-grow {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+/* Marquee strip */
+.marquee {
+  overflow: hidden;
+  background: var(--verde);
+  padding: 14px 0;
+  border-top: 1px solid rgba(201,136,42,.18);
+  border-bottom: 1px solid rgba(201,136,42,.18);
+}
+.marquee__track {
+  display: flex;
+  gap: 28px;
+  width: max-content;
+  animation: marquee-scroll 24s linear infinite;
+  white-space: nowrap;
+}
+.marquee__track span {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(245,242,235,.45);
+}
+.marquee__dot { color: var(--ambar) !important; }
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* CSS Scroll-driven nativo (Chrome 115+, Firefox 110+, Safari 17.2+) */
+@supports (animation-timeline: view()) {
+  .card-problema,
+  .servico-card,
+  .processo-step,
+  .para-quem-col,
+  .sobre__visual,
+  .sobre__text,
+  .proposta {
+    animation: reveal-up linear both !important;
+    animation-timeline: view() !important;
+    animation-range: entry 0% cover 35% !important;
+    transition: none !important;
+  }
+  @keyframes reveal-up {
+    from { opacity: 0; transform: translateY(32px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
 }
 
 /* Hero metrics panel */
@@ -692,9 +784,10 @@ button{ cursor: pointer; border: none; background: none; font-family: inherit; }
 
 /* prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
-  .hero__eyebrow, .hero__headline, .hero__sub, .hero__ctas, .hero__tagline {
+  .hero__eyebrow, .hero__sub, .hero__ctas, .hero__tagline, .hero__metrics {
     opacity: 1; transform: none; animation: none;
   }
+  .word { transform: none; opacity: 1; animation: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .card-problema, .processo-step { transition-delay: 0s !important; }
   .servico-card { transition: box-shadow var(--transition); }
@@ -702,6 +795,9 @@ button{ cursor: pointer; border: none; background: none; font-family: inherit; }
   .nav__link { background: none !important; }
   .faq-item__a { transition: none; }
   .hero__metrics-live { animation: none; }
+  .hero__bg::before { animation: none; }
+  .marquee__track { animation: none; }
+  .reading-progress { display: none; }
 }
 
 /* ============================================================

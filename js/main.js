@@ -57,6 +57,20 @@ document.querySelectorAll('.faq-item__q').forEach(btn => {
 });
 
 /* ============================================================
+   WORD REVEAL — H1 (estilo Linear/Apple)
+   ============================================================ */
+const headline = document.querySelector('.hero__headline');
+if (headline && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  headline.innerHTML = headline.textContent
+    .split(' ')
+    .map(w => `<span class="word-wrap"><span class="word">${w}</span></span>`)
+    .join(' ');
+  headline.querySelectorAll('.word').forEach((w, i) => {
+    w.style.animationDelay = `${0.08 + i * 0.065}s`;
+  });
+}
+
+/* ============================================================
    HERO METRICS — COUNTER ANIMATION
    ============================================================ */
 function animateCounter(el) {
