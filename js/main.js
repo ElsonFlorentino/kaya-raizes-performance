@@ -57,6 +57,43 @@ document.querySelectorAll('.faq-item__q').forEach(btn => {
 });
 
 /* ============================================================
+   HERO METRICS — COUNTER ANIMATION
+   ============================================================ */
+function animateCounter(el) {
+  const target  = parseInt(el.dataset.target, 10);
+  const prefix  = el.dataset.prefix  || '';
+  const suffix  = el.dataset.suffix  || '';
+  const duration = 1400;
+  const startTime = performance.now();
+
+  function tick(now) {
+    const elapsed  = now - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased    = 1 - Math.pow(1 - progress, 4); // easeOutQuart
+    el.textContent = prefix + Math.round(eased * target) + suffix;
+    if (progress < 1) requestAnimationFrame(tick);
+  }
+
+  requestAnimationFrame(tick);
+}
+
+const metricsPanel = document.querySelector('.hero__metrics');
+if (metricsPanel) {
+  const metricsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          metricsPanel.querySelectorAll('[data-target]').forEach(animateCounter);
+        }, 700);
+        metricsObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.6 });
+
+  metricsObserver.observe(metricsPanel);
+}
+
+/* ============================================================
    SCROLL REVEAL
    ============================================================ */
 const revealObserver = new IntersectionObserver((entries) => {

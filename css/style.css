@@ -548,7 +548,8 @@ button{ cursor: pointer; border: none; background: none; font-family: inherit; }
 .hero__headline,
 .hero__sub,
 .hero__ctas,
-.hero__tagline {
+.hero__tagline,
+.hero__metrics {
   opacity: 0;
   transform: translateY(16px);
   animation: hero-in 0.6s ease forwards;
@@ -558,9 +559,77 @@ button{ cursor: pointer; border: none; background: none; font-family: inherit; }
 .hero__sub      { animation-delay: 0.36s; }
 .hero__ctas     { animation-delay: 0.50s; }
 .hero__tagline  { animation-delay: 0.64s; }
+.hero__metrics  { animation-delay: 0.80s; }
 
 @keyframes hero-in {
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* Hero metrics panel */
+.hero__metrics {
+  margin-top: 28px;
+  background: rgba(13, 43, 34, 0.62);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(201, 136, 42, 0.30);
+  border-radius: 12px;
+  padding: 18px 20px;
+  max-width: 320px;
+}
+
+.hero__metrics-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.hero__metrics-title {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: rgba(245, 242, 235, 0.45);
+  text-transform: uppercase;
+  letter-spacing: 0.10em;
+}
+
+.hero__metrics-live {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #5CB85C;
+  animation: live-pulse 2.4s ease infinite;
+}
+
+@keyframes live-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(92, 184, 92, 0.5); }
+  60%       { box-shadow: 0 0 0 7px rgba(92, 184, 92, 0); }
+}
+
+.hero__metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.metric__value {
+  font-size: 1.625rem;
+  font-weight: 800;
+  color: var(--ambar);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.metric__label {
+  font-size: 0.6875rem;
+  color: rgba(245, 242, 235, 0.55);
+  line-height: 1.3;
+  font-weight: 400;
 }
 
 /* Scroll-reveal — base */
@@ -632,6 +701,7 @@ button{ cursor: pointer; border: none; background: none; font-family: inherit; }
   .servico-card:hover { transform: none; }
   .nav__link { background: none !important; }
   .faq-item__a { transition: none; }
+  .hero__metrics-live { animation: none; }
 }
 
 /* ============================================================
