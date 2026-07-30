@@ -3,6 +3,22 @@
    Mobile-first. Sem framework.
    ============================================================ */
 
+/* ---- SKIP LINK ---- */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  background: var(--verde);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 0 0 4px 4px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  z-index: 9999;
+  text-decoration: none;
+}
+.skip-link:focus { top: 0; }
+
 /* ---- RESET ---- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -449,6 +465,7 @@ button{ cursor: pointer; border: none; background: none; font-family: inherit; }
 .form__group    { margin-bottom: 20px; }
 .form__label    { display: block; font-size: 0.875rem; font-weight: 600; color: var(--verde); margin-bottom: 6px; }
 .form__req      { color: var(--terracota); }
+.form__req-note { font-size: 0.8125rem; color: var(--texto-suave); margin-bottom: 1rem; }
 .form__optional { font-weight: 400; color: var(--texto-suave); font-size: 0.8125rem; margin-left: 4px; }
 
 .form__input {

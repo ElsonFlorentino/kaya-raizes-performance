@@ -103,6 +103,7 @@ form?.addEventListener('submit', async (e) => {
     if (res.ok) {
       form.hidden       = true;
       formSuccess.hidden = false;
+      formSuccess.focus();
       track('form_submit', {
         segmento:     payload.segmento,
         investimento: payload.investimento || 'nao_informado'
