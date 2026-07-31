@@ -555,25 +555,16 @@ button{ cursor: pointer; border: none; background: none; font-family: inherit; }
    ANIMAÇÕES
    ============================================================ */
 
-/* Hero — entrada em cascata no page-load */
+/* Hero — estado inicial (Motion anima com spring) */
 .hero__eyebrow,
 .hero__sub,
 .hero__ctas,
 .hero__tagline {
   opacity: 0;
   transform: translateY(16px);
-  animation: hero-in 0.6s ease forwards;
-}
-.hero__eyebrow  { animation-delay: 0.10s; }
-.hero__sub      { animation-delay: 0.36s; }
-.hero__ctas     { animation-delay: 0.50s; }
-.hero__tagline  { animation-delay: 0.64s; }
-
-@keyframes hero-in {
-  to { opacity: 1; transform: translateY(0); }
 }
 
-/* Word reveal — H1 (clip-path mask, estilo Linear/Apple) */
+/* Word reveal — estrutura (Motion anima) */
 .word-wrap {
   display: inline-block;
   overflow: hidden;
@@ -584,10 +575,6 @@ button{ cursor: pointer; border: none; background: none; font-family: inherit; }
   display: inline-block;
   transform: translateY(110%);
   opacity: 0;
-  animation: word-up 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-@keyframes word-up {
-  to { transform: translateY(0); opacity: 1; }
 }
 
 /* Progress bar de leitura */
@@ -635,60 +622,9 @@ button{ cursor: pointer; border: none; background: none; font-family: inherit; }
   to   { transform: translateX(-50%); }
 }
 
-/* CSS Scroll-driven nativo (Chrome 115+, Firefox 110+, Safari 17.2+) */
-@supports (animation-timeline: view()) {
-  .card-problema,
-  .servico-card,
-  .processo-step,
-  .para-quem-col,
-  .sobre__visual,
-  .sobre__text,
-  .proposta {
-    animation: reveal-up linear both !important;
-    animation-timeline: view() !important;
-    animation-range: entry 0% cover 35% !important;
-    transition: none !important;
-  }
-  @keyframes reveal-up {
-    from { opacity: 0; transform: translateY(32px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-}
-
-/* Scroll-reveal — base */
-.reveal {
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-              transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Processo — slide da esquerda */
-.processo-step.reveal { transform: translateX(-28px); }
-.processo-step.is-visible { transform: translateX(0); }
-
-/* Stagger — cards de problema */
-.card-problema:nth-child(1) { transition-delay: 0s; }
-.card-problema:nth-child(2) { transition-delay: 0.08s; }
-.card-problema:nth-child(3) { transition-delay: 0.16s; }
-.card-problema:nth-child(4) { transition-delay: 0.24s; }
-.card-problema:nth-child(5) { transition-delay: 0.32s; }
-
-/* Stagger — etapas do processo */
-.processo-step:nth-child(1) { transition-delay: 0s; }
-.processo-step:nth-child(2) { transition-delay: 0.12s; }
-.processo-step:nth-child(3) { transition-delay: 0.24s; }
-.processo-step:nth-child(4) { transition-delay: 0.36s; }
-
-/* Hover lift aprimorado — cards de serviço */
-.servico-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 32px rgba(201, 136, 42, 0.18);
-}
+/* Hover lift — cards de serviço (Motion controla transform, CSS controla shadow) */
+.servico-card { transition: box-shadow 0.25s ease; }
+.servico-card:hover { box-shadow: 0 8px 32px rgba(201, 136, 42, 0.18); }
 
 /* Underline âmbar — nav links (desktop) */
 @media (min-width: 900px) {
@@ -700,31 +636,20 @@ button{ cursor: pointer; border: none; background: none; font-family: inherit; }
   .nav__link:hover { color: var(--creme); background-size: 100% 2px; }
 }
 
-/* FAQ — accordion suave com max-height */
+/* FAQ — Motion anima height com spring; fallback CSS: altura auto */
 .faq-item__a {
   display: block !important;
   overflow: hidden;
-  max-height: 0;
-  padding-bottom: 0;
-  transition: max-height 0.35s ease, padding-bottom 0.35s ease;
+  height: 0;
 }
-.faq-item__a.is-open {
-  max-height: 500px;
-  padding-bottom: 20px;
-}
+.faq-item__a.is-open { height: auto; }
 
 /* prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
-  .hero__eyebrow, .hero__sub, .hero__ctas, .hero__tagline {
-    opacity: 1; transform: none; animation: none;
-  }
-  .word { transform: none; opacity: 1; animation: none; }
-  .reveal { opacity: 1; transform: none; transition: none; }
-  .card-problema, .processo-step { transition-delay: 0s !important; }
-  .servico-card { transition: box-shadow var(--transition); }
-  .servico-card:hover { transform: none; }
+  .hero__eyebrow, .hero__sub, .hero__ctas, .hero__tagline,
+  .word { opacity: 1; transform: none; }
+  .faq-item__a { height: auto !important; }
   .nav__link { background: none !important; }
-  .faq-item__a { transition: none; }
   .hero__bg::before { animation: none; }
   .marquee__track { animation: none; }
   .reading-progress { display: none; }
